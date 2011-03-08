@@ -1,0 +1,1 @@
+A TextMate bundle for working with Google Closure. Currently, the bundle only contains one command (Build) that compiles your selected JavaScript using the included versions of the Google Closure compiler and library.
