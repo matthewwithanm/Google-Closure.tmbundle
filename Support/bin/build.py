@@ -12,11 +12,16 @@ import sys
 import cgi
 import re
 
+# TODO: Some of this needs to move into its own module if it'll be used in other commands.
 BUNDLE_SUPPORT_PATH = os.environ['TM_BUNDLE_SUPPORT']
 TM_SUPPORT_PATH = os.environ['TM_SUPPORT_PATH']
 LIB_PATH = os.path.join(BUNDLE_SUPPORT_PATH, 'lib')
 BIN_PATH = os.path.join(BUNDLE_SUPPORT_PATH, 'bin')
 CLOSURE_BIN_PATH = os.path.join(BUNDLE_SUPPORT_PATH, 'src/closure-library/closure/bin/build')
+GC_OUTPUT = os.environ.get('GC_OUTPUT');
+TM_PROJECT_DIRECTORY = os.environ.get('TM_PROJECT_DIRECTORY')
+if GC_OUTPUT:
+    GC_OUTPUT = os.path.join(TM_PROJECT_DIRECTORY, GC_OUTPUT)
 
 if TM_SUPPORT_PATH not in sys.path:
     sys.path.append(TM_SUPPORT_PATH)
@@ -53,7 +58,7 @@ def build():
     
     # Determine what files to compile and the output file name.
     files_to_compile = [eval_str(file) for file in os.environ.get('TM_SELECTED_FILES', '').split(' ')]
-    outfile = 'compiled.js'
+    outfile = GC_OUTPUT or 'compiled.js'
     if len(files_to_compile) <= 1:
         current_file = os.environ.get('TM_FILEPATH')
         if not current_file:
@@ -62,10 +67,9 @@ def build():
         else:
             files_to_compile = [current_file]
             parts = os.path.splitext(current_file)
-            outfile = '%s-compiled%s' % (parts[0], parts[1])
+            outfile = GC_OUTPUT or '%s-compiled%s' % (parts[0], parts[1])
 
-    project_dir = os.environ.get('TM_PROJECT_DIRECTORY')
-    if not project_dir:
+    if not TM_PROJECT_DIRECTORY:
     	textmate.exit_show_tool_tip('You need a project!')
     
     compiler = os.path.join(BIN_PATH, 'compiler.jar')
@@ -81,7 +85,7 @@ def build():
         'python',
     	e_sh(closurebuilder),
     	'--root', e_sh(closure_library),
-    	'--root', e_sh(project_dir),
+    	'--root', e_sh(TM_PROJECT_DIRECTORY),
     	'--output_mode=compiled',
     	'--compiler_jar', e_sh(compiler),
     	'--output_file', e_sh(outfile)]
