@@ -3,6 +3,8 @@
 # TODO: Clean up and separate templating code.
 # TODO: Change columnIndicator to columnNumber and recreate string from that in template.
 # TODO: Add link to line of code in HTML
+# TODO: Add clear green success, red failure messages upon completion.
+# TODO: Add JS_SOURCE_PATHS environment var. If not present, still use project dir, but display warning (may take a long time to compile depending on your project dir).
 
 from compiler import parse
 import os, os.path, subprocess
