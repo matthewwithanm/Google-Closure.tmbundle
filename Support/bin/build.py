@@ -18,10 +18,13 @@ TM_SUPPORT_PATH = os.environ['TM_SUPPORT_PATH']
 LIB_PATH = os.path.join(BUNDLE_SUPPORT_PATH, 'lib')
 BIN_PATH = os.path.join(BUNDLE_SUPPORT_PATH, 'bin')
 CLOSURE_BIN_PATH = os.path.join(BUNDLE_SUPPORT_PATH, 'src/closure-library/closure/bin/build')
-GC_OUTPUT = os.environ.get('GC_OUTPUT');
+GC_OUTPUT_FILE = os.environ.get('GC_OUTPUT_FILE')
+GC_INPUT = os.environ.get('GC_INPUT')
 TM_PROJECT_DIRECTORY = os.environ.get('TM_PROJECT_DIRECTORY')
-if GC_OUTPUT:
-    GC_OUTPUT = os.path.join(TM_PROJECT_DIRECTORY, GC_OUTPUT)
+if GC_OUTPUT_FILE:
+    GC_OUTPUT_FILE = os.path.join(TM_PROJECT_DIRECTORY, GC_OUTPUT_FILE)
+if GC_INPUT:
+    GC_INPUT = [os.path.join(TM_PROJECT_DIRECTORY, file) for file in GC_INPUT.split(':')]
 
 if TM_SUPPORT_PATH not in sys.path:
     sys.path.append(TM_SUPPORT_PATH)
@@ -57,17 +60,20 @@ def eval_str(str):
 def build():
     
     # Determine what files to compile and the output file name.
-    files_to_compile = [eval_str(file) for file in os.environ.get('TM_SELECTED_FILES', '').split(' ')]
-    outfile = GC_OUTPUT or 'compiled.js'
-    if len(files_to_compile) <= 1:
-        current_file = os.environ.get('TM_FILEPATH')
-        if not current_file:
-            if not files_to_compile:
-                textmate.exit_show_tool_tip('No file to compile.')
-        else:
-            files_to_compile = [current_file]
-            parts = os.path.splitext(current_file)
-            outfile = GC_OUTPUT or '%s-compiled%s' % (parts[0], parts[1])
+    outfile = GC_OUTPUT_FILE or 'compiled.js'
+    if GC_INPUT:
+        files_to_compile = GC_INPUT
+    else:
+        files_to_compile = [eval_str(file) for file in os.environ.get('TM_SELECTED_FILES', '').split(' ')]
+        if len(files_to_compile) <= 1:
+            current_file = os.environ.get('TM_FILEPATH')
+            if not current_file:
+                if not files_to_compile:
+                    textmate.exit_show_tool_tip('No file to compile.')
+            else:
+                files_to_compile = [current_file]
+                parts = os.path.splitext(current_file)
+                outfile = GC_OUTPUT_FILE or '%s-compiled%s' % (parts[0], parts[1])
 
     if not TM_PROJECT_DIRECTORY:
     	textmate.exit_show_tool_tip('You need a project!')
