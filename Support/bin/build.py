@@ -5,6 +5,7 @@
 # TODO: Add link to line of code in HTML
 # TODO: Add clear green success, red failure messages upon completion.
 # TODO: Add JS_SOURCE_PATHS environment var. If not present, still use project dir, but display warning (may take a long time to compile depending on your project dir).
+# TODO: Allow override of UPPERCASE settings.
 
 from compiler import parse
 import os, os.path, subprocess
@@ -17,7 +18,7 @@ BUNDLE_SUPPORT_PATH = os.environ['TM_BUNDLE_SUPPORT']
 TM_SUPPORT_PATH = os.environ['TM_SUPPORT_PATH']
 LIB_PATH = os.path.join(BUNDLE_SUPPORT_PATH, 'lib')
 BIN_PATH = os.path.join(BUNDLE_SUPPORT_PATH, 'bin')
-CLOSURE_BIN_PATH = os.path.join(BUNDLE_SUPPORT_PATH, 'src/closure-library/closure/bin/build')
+CLOSURE_LIBRARY_BIN_PATH = os.path.join(LIB_PATH, 'third_party/closure-library/closure/bin')
 GC_OUTPUT_FILE = os.environ.get('GC_OUTPUT_FILE')
 GC_INPUT = os.environ.get('GC_INPUT')
 TM_PROJECT_DIRECTORY = os.environ.get('TM_PROJECT_DIRECTORY')
@@ -25,6 +26,9 @@ if GC_OUTPUT_FILE:
     GC_OUTPUT_FILE = os.path.join(TM_PROJECT_DIRECTORY, GC_OUTPUT_FILE)
 if GC_INPUT:
     GC_INPUT = [os.path.join(TM_PROJECT_DIRECTORY, file) for file in GC_INPUT.split(':')]
+CLOSURE_BUILDER = os.path.join(CLOSURE_LIBRARY_BIN_PATH, 'build/closurebuilder.py')
+CLOSURE_COMPILER = os.path.join(LIB_PATH, 'third_party/closure-compiler/compiler.jar')
+CLOSURE_LIBRARY = os.path.join(LIB_PATH, 'third_party/closure-library')
 
 if TM_SUPPORT_PATH not in sys.path:
     sys.path.append(TM_SUPPORT_PATH)
@@ -78,10 +82,6 @@ def build():
     if not TM_PROJECT_DIRECTORY:
     	textmate.exit_show_tool_tip('You need a project!')
     
-    compiler = os.path.join(BIN_PATH, 'compiler.jar')
-    closure_library = os.path.join(BUNDLE_SUPPORT_PATH, 'src/closure-library')
-    closurebuilder = os.path.join(CLOSURE_BIN_PATH, 'closurebuilder.py')
-    
     print webpreview2.html_header('Build (closurebuilder.py)', ', '.join([os.path.basename(file) for file in files_to_compile]))
     print '<h2>Building...</h2>'
     
@@ -89,11 +89,11 @@ def build():
     e_sh = textmate.sh_escape
     args = [
         'python',
-    	e_sh(closurebuilder),
-    	'--root', e_sh(closure_library),
+    	e_sh(CLOSURE_BUILDER),
+    	'--root', e_sh(CLOSURE_LIBRARY),
     	'--root', e_sh(TM_PROJECT_DIRECTORY),
     	'--output_mode=compiled',
-    	'--compiler_jar', e_sh(compiler),
+    	'--compiler_jar', e_sh(CLOSURE_COMPILER),
     	'--output_file', e_sh(outfile)]
     for file in files_to_compile:
         args += ['--input', e_sh(file)]
