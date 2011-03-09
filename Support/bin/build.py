@@ -10,40 +10,11 @@
 from compiler import parse
 import os, os.path, subprocess
 import sys
-import cgi
 import re
-
-# TODO: Some of this needs to move into its own module if it'll be used in other commands.
-BUNDLE_SUPPORT_PATH = os.environ['TM_BUNDLE_SUPPORT']
-TM_SUPPORT_PATH = os.environ['TM_SUPPORT_PATH']
-LIB_PATH = os.path.join(BUNDLE_SUPPORT_PATH, 'lib')
-BIN_PATH = os.path.join(BUNDLE_SUPPORT_PATH, 'bin')
-CLOSURE_LIBRARY_BIN_PATH = os.path.join(LIB_PATH, 'third_party/closure-library/closure/bin')
-GC_OUTPUT_FILE = os.environ.get('GC_OUTPUT_FILE')
-GC_INPUT = os.environ.get('GC_INPUT')
-TM_PROJECT_DIRECTORY = os.environ.get('TM_PROJECT_DIRECTORY')
-if GC_OUTPUT_FILE:
-    GC_OUTPUT_FILE = os.path.join(TM_PROJECT_DIRECTORY, GC_OUTPUT_FILE)
-if GC_INPUT:
-    GC_INPUT = [os.path.join(TM_PROJECT_DIRECTORY, file) for file in GC_INPUT.split(':')]
-CLOSURE_BUILDER = os.path.join(CLOSURE_LIBRARY_BIN_PATH, 'build/closurebuilder.py')
-CLOSURE_COMPILER = os.path.join(LIB_PATH, 'third_party/closure-compiler/compiler.jar')
-CLOSURE_LIBRARY = os.path.join(LIB_PATH, 'third_party/closure-library')
-
-if TM_SUPPORT_PATH not in sys.path:
-    sys.path.append(TM_SUPPORT_PATH)
-if LIB_PATH not in sys.path:
-    sys.path.insert(0, LIB_PATH)
-if BIN_PATH not in sys.path:
-    sys.path.append(BIN_PATH)
-
+from settings import *
 
 import textmate
 import webpreview2
-
-
-def _escape_for_html(txt):
-    return cgi.escape(txt or '').encode('ascii', 'xmlcharrefreplace')
 
 
 def parse_line(txt):
@@ -62,7 +33,7 @@ def eval_str(str):
     
 
 def build():
-    
+
     # Determine what files to compile and the output file name.
     outfile = GC_OUTPUT_FILE or 'compiled.js'
     if GC_INPUT:
@@ -90,7 +61,7 @@ def build():
     args = [
         'python',
     	e_sh(CLOSURE_BUILDER),
-    	'--root', e_sh(CLOSURE_LIBRARY),
+    	'--root', e_sh(CLOSURE_LIBRARY_PATH),
     	'--root', e_sh(TM_PROJECT_DIRECTORY),
     	'--output_mode=compiled',
     	'--compiler_jar', e_sh(CLOSURE_COMPILER),
@@ -99,7 +70,7 @@ def build():
         args += ['--input', e_sh(file)]
     cmd = ' '.join(args)
 
-    print '<pre>%s</pre>' % _escape_for_html(cmd)
+    print '<pre>%s</pre>' % webpreview2.escape_for_html(cmd)
     print """
         <div id="error-container" style="display:none;">
             <h3>Errors</h3>
@@ -151,7 +122,7 @@ def build():
         buffer += data
         parsed_line = parse_line(buffer)
         if parsed_line:
-            sys.stdout.write('<script>addToList("%s", "%s", "%s", "%s", "%s", "%s");</script>' % (_escape_for_html(parsed_line.group('warning_level')), _escape_for_html(parsed_line.group('filename')), _escape_for_html(parsed_line.group('line_number')), _escape_for_html(parsed_line.group('message')), _escape_for_html(parsed_line.group('code')), _escape_for_html(parsed_line.group('column_indicator'))))
+            sys.stdout.write('<script>addToList("%s", "%s", "%s", "%s", "%s", "%s");</script>' % (webpreview2.escape_for_html(parsed_line.group('warning_level')), webpreview2.escape_for_html(parsed_line.group('filename')), webpreview2.escape_for_html(parsed_line.group('line_number')), webpreview2.escape_for_html(parsed_line.group('message')), webpreview2.escape_for_html(parsed_line.group('code')), webpreview2.escape_for_html(parsed_line.group('column_indicator'))))
             sys.stdout.flush()
             # Clear the buffer so that we don't find this one again.
             buffer = ''
