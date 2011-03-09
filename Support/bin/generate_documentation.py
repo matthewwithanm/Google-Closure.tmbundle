@@ -25,7 +25,7 @@ def generate_documentation():
     	'-a',
     	'--directory=' + e_sh(os.path.join(TM_PROJECT_DIRECTORY, 'docs')),
     	'--template=' + e_sh(JSDOC_TEMPLATE_PATH),
-        '--exclude="\.compiled\.js$"', # Exclude compiled files.
+        '--exclude="[\.\-]compiled\.js$"', # Exclude compiled files.
     	'--recurse=10',
     	e_sh(input)]
     cmd = ' '.join(args)
