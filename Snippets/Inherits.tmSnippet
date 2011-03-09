@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>goog.inherits(${1:class}, ${2:superclass});$0</string>
+	<key>name</key>
+	<string>Inherits</string>
+	<key>tabTrigger</key>
+	<string>inherit</string>
+	<key>uuid</key>
+	<string>6C4AE4A6-E80D-4BF9-B338-48455CBBAC9D</string>
+</dict>
+</plist>

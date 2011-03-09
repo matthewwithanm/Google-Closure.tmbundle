@@ -2,11 +2,54 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>mainMenu</key>
+	<dict>
+		<key>items</key>
+		<array>
+			<string>A652E096-EB51-489F-9E6C-71A9E6C230D4</string>
+			<string>0487C04A-C627-4FB0-9900-6C3E0F240AC9</string>
+			<string>F84F8A7E-C511-4A0A-B370-5C184C35C482</string>
+		</array>
+		<key>submenus</key>
+		<dict>
+			<key>0487C04A-C627-4FB0-9900-6C3E0F240AC9</key>
+			<dict>
+				<key>items</key>
+				<array>
+					<string>C41193F7-E268-4D12-8592-1B4BF2E406F7</string>
+				</array>
+				<key>name</key>
+				<string>JSDoc</string>
+			</dict>
+			<key>A652E096-EB51-489F-9E6C-71A9E6C230D4</key>
+			<dict>
+				<key>items</key>
+				<array>
+					<string>68A98637-A4FF-48F6-B170-FEBD05659414</string>
+				</array>
+				<key>name</key>
+				<string>Compiler</string>
+			</dict>
+			<key>F84F8A7E-C511-4A0A-B370-5C184C35C482</key>
+			<dict>
+				<key>items</key>
+				<array>
+					<string>C14AB136-6096-48AA-AC73-1D1ED778B449</string>
+					<string>6C4AE4A6-E80D-4BF9-B338-48455CBBAC9D</string>
+				</array>
+				<key>name</key>
+				<string>Shortcuts</string>
+			</dict>
+		</dict>
+	</dict>
 	<key>name</key>
 	<string>Google Closure</string>
 	<key>ordering</key>
 	<array>
 		<string>68A98637-A4FF-48F6-B170-FEBD05659414</string>
+		<string>C41193F7-E268-4D12-8592-1B4BF2E406F7</string>
+		<string>C14AB136-6096-48AA-AC73-1D1ED778B449</string>
+		<string>6C4AE4A6-E80D-4BF9-B338-48455CBBAC9D</string>
 	</array>
 	<key>uuid</key>
 	<string>7BD4F15C-86D7-4FDB-9270-2B07356DEB3F</string>
