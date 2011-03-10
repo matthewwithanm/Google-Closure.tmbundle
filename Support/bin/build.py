@@ -6,6 +6,7 @@
 # TODO: Add clear green success, red failure messages upon completion.
 # TODO: Add JS_SOURCE_PATHS environment var. If not present, still use project dir, but display warning (may take a long time to compile depending on your project dir).
 # TODO: Allow override of UPPERCASE settings.
+# TODO: Add setting (Boolean) for exporting source map.
 
 from compiler import parse
 import os, os.path, subprocess
@@ -49,11 +50,16 @@ def build():
                 files_to_compile = [current_file]
                 parts = os.path.splitext(current_file)
                 outfile = GC_OUTPUT_FILE or '%s-compiled%s' % (parts[0], parts[1])
+    source_map = os.path.splitext(outfile)[0] + '-sourcemap'
 
     if not TM_PROJECT_DIRECTORY:
     	textmate.exit_show_tool_tip('You need a project!')
     
-    print webpreview2.html_header('Build (closurebuilder.py)', ', '.join([os.path.basename(file) for file in files_to_compile]))
+    if DEBUG:
+        title = 'DEBUG Build (closurebuilder.py)'
+    else:
+        title = 'Build (closurebuilder.py)'
+    print webpreview2.html_header(title, ', '.join([os.path.basename(file) for file in files_to_compile]))
     print '<h2>Building...</h2>'
     
     # Create the command.
@@ -66,6 +72,10 @@ def build():
     	'--output_mode=compiled',
     	'--compiler_jar', e_sh(CLOSURE_COMPILER),
     	'--output_file', e_sh(outfile)]
+    if DEBUG:
+        args += [
+            '--compiler_flags="--debug"',
+    	    '--compiler_flags="--create_source_map=%s"' % e_sh(source_map).replace('"', '\\"')]
     for file in files_to_compile:
         args += ['--input', e_sh(file)]
     cmd = ' '.join(args)

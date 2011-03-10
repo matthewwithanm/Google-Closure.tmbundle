@@ -7,6 +7,8 @@ LIB_PATH = os.path.join(BUNDLE_SUPPORT_PATH, 'lib')
 BIN_PATH = os.path.join(BUNDLE_SUPPORT_PATH, 'bin')
 TM_PROJECT_DIRECTORY = os.environ.get('TM_PROJECT_DIRECTORY')
 
+DEBUG = os.environ.get('DEBUG', False)
+
 # Closure library
 CLOSURE_LIBRARY_PATH = os.path.join(LIB_PATH, 'third_party/closure-library')
 CLOSURE_LIBRARY_BIN_PATH = os.path.join(CLOSURE_LIBRARY_PATH, 'closure/bin')
