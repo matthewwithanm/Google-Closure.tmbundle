@@ -4,4 +4,4 @@ Installation
 ============
 
     cd ~/Library/Application\ Support/TextMate/Bundles/
-    git clone git://github.com/matthewwithanm/Google-Closure.tmbundle.git Google\ Closure.tmbundle
+    git clone git://github.com/kenzic/Google-Closure.tmbundle.git Google\ Closure.tmbundle
