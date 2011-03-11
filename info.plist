@@ -9,6 +9,7 @@
 			<string>A652E096-EB51-489F-9E6C-71A9E6C230D4</string>
 			<string>0487C04A-C627-4FB0-9900-6C3E0F240AC9</string>
 			<string>F84F8A7E-C511-4A0A-B370-5C184C35C482</string>
+			<string>15FDFAA9-DAC8-406F-A8BE-9A9218FD8F82</string>
 		</array>
 		<key>submenus</key>
 		<dict>
@@ -20,6 +21,16 @@
 				</array>
 				<key>name</key>
 				<string>JSDoc</string>
+			</dict>
+			<key>15FDFAA9-DAC8-406F-A8BE-9A9218FD8F82</key>
+			<dict>
+				<key>items</key>
+				<array>
+					<string>E78E0DF2-2960-4BC6-B34B-DDD3B8DCA25F</string>
+					<string>6745D192-94E7-4108-9BEA-D975ABFD9701</string>
+				</array>
+				<key>name</key>
+				<string>Linter</string>
 			</dict>
 			<key>A652E096-EB51-489F-9E6C-71A9E6C230D4</key>
 			<dict>
@@ -50,6 +61,8 @@
 		<string>68A98637-A4FF-48F6-B170-FEBD05659414</string>
 		<string>19CC4C8C-D7F3-48AE-BE48-D6E4A2D3C921</string>
 		<string>C41193F7-E268-4D12-8592-1B4BF2E406F7</string>
+		<string>6745D192-94E7-4108-9BEA-D975ABFD9701</string>
+		<string>E78E0DF2-2960-4BC6-B34B-DDD3B8DCA25F</string>
 		<string>C14AB136-6096-48AA-AC73-1D1ED778B449</string>
 		<string>6C4AE4A6-E80D-4BF9-B338-48455CBBAC9D</string>
 	</array>
