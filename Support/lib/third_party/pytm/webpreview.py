@@ -1,7 +1,6 @@
 # A fixed version of the one bundled with TM
 
 # python bindings for soryu's web-preview
-import cgi
 from os import path, environ
 from tm_helpers import sh, sh_escape
 
@@ -12,6 +11,3 @@ def html_header(title, subtitle):
 
 def html_footer():
     return sh('source %s; html_footer' % webpreview)
-
-def escape_for_html(txt):
-    return cgi.escape(txt or '').encode('ascii', 'xmlcharrefreplace')

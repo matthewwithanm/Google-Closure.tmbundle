@@ -1,26 +1,27 @@
 #!/usr/bin/env python
 from settings import *
 import os, sys
-import textmate
-import webpreview2
-
+from pytm import htmloutput
 from cStringIO import StringIO
+
+# TODO: Prettier output.
+# TODO: Link back to code.
 
 try:
     from closure_linter import checker
     from closure_linter import errors
     from closure_linter.common import errorprinter
 except:
-    raise Exception("Please install the closure linter first")
+    raise Exception('Please install the closure linter first')
     
 try:
     os.environ['TM_FILEPATH']
 except:
-    raise Exception("Please save file before running linter.")
+    raise Exception('Please save file before running linter.')
 
     
 def run_linter():
-    print webpreview2.html_header('Running Google Closure Linter...', '')
+    print htmloutput.header('Running Google Closure Linter...')
 
     old_stdout = sys.stdout    
     error_handler = errorprinter.ErrorPrinter(errors.NEW_ERRORS)
@@ -41,15 +42,15 @@ def run_linter():
 
     # Print the File Name
     first_line = mystdout.readline()
-    print "<h3>%s</h3>" % first_line[first_line.find(':') + 2:-7]
+    print '<h3>%s</h3>' % first_line[first_line.find(':') + 2:-7]
     
     print '<pre>'
     for line in mystdout.readlines():
-        sys.stdout.write(webpreview2.escape_for_html(line))
+        sys.stdout.write(htmloutput.escape_for_html(line))
         sys.stdout.flush()
     print '</pre>'
     result.PrintSummary()
-    print webpreview2.html_footer()
+    print htmloutput.footer()
 
 if __name__ == '__main__':
     run_linter()

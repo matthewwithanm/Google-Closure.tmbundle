@@ -28,6 +28,9 @@ JSDOC_TOOLKIT_PATH = os.path.join(LIB_PATH, 'third_party/jsdoc-toolkit')
 JSRUN_JAR = os.path.join(JSDOC_TOOLKIT_PATH, 'jsrun.jar')
 JSDOC_TEMPLATE_PATH = os.environ.get('JSDOC_TEMPLATE_PATH', os.path.join(JSDOC_TOOLKIT_PATH, 'templates/jsdoc'))
 
+# Third-party code.
+THIRD_PARTY_PATH = os.path.join(LIB_PATH, 'third_party')
+
 # Add some folders to sys.path
 if TM_SUPPORT_PATH not in sys.path:
     sys.path.append(TM_SUPPORT_PATH)
@@ -35,3 +38,5 @@ if LIB_PATH not in sys.path:
     sys.path.insert(0, LIB_PATH)
 if BIN_PATH not in sys.path:
     sys.path.append(BIN_PATH)
+if THIRD_PARTY_PATH not in sys.path:
+    sys.path.append(THIRD_PARTY_PATH)

@@ -8,13 +8,12 @@
 
 from settings import *
 import subprocess
-import textmate
-import webpreview2
+from pytm import htmloutput, textmate
 
 
 def generate_documentation():
     input = TM_PROJECT_DIRECTORY
-    print webpreview2.html_header('Generating Documentation...', '')
+    print htmloutput.header('Generating Documentation...')
 
     # Create the command.
     e_sh = textmate.sh_escape
@@ -35,10 +34,10 @@ def generate_documentation():
     
     print '<pre>'
     while p.poll() is None:
-        sys.stdout.write(webpreview2.escape_for_html(p.stdout.readline()))
+        sys.stdout.write(htmloutput.escape_for_html(p.stdout.readline()))
         sys.stdout.flush()
     print '</pre>'    
-    print webpreview2.html_footer()
+    print htmloutput.footer()
 
 
 if __name__ == '__main__':

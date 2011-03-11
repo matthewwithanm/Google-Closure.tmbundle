@@ -14,8 +14,7 @@ import sys
 import re
 from settings import *
 
-import textmate
-import webpreview2
+from pytm import textmate, jsinterface, htmloutput
 
 
 def parse_line(txt):
@@ -59,7 +58,7 @@ def build():
         title = 'DEBUG Build (closurebuilder.py)'
     else:
         title = 'Build (closurebuilder.py)'
-    print webpreview2.html_header(title, ', '.join([os.path.basename(file) for file in files_to_compile]))
+    print htmloutput.header(title, ', '.join([os.path.basename(file) for file in files_to_compile]))
     print '<h2>Building...</h2>'
     
     # Create the command.
@@ -80,7 +79,7 @@ def build():
         args += ['--input', e_sh(file)]
     cmd = ' '.join(args)
 
-    print '<pre>%s</pre>' % webpreview2.escape_for_html(cmd)
+    print '<pre>%s</pre>' % htmloutput.escape_for_html(cmd)
     print """
         <div id="error-container" style="display:none;">
             <h3>Errors</h3>
@@ -132,8 +131,13 @@ def build():
         buffer += data
         parsed_line = parse_line(buffer)
         if parsed_line:
-            sys.stdout.write('<script>addToList("%s", "%s", "%s", "%s", "%s", "%s");</script>' % (webpreview2.escape_for_html(parsed_line.group('warning_level')), webpreview2.escape_for_html(parsed_line.group('filename')), webpreview2.escape_for_html(parsed_line.group('line_number')), webpreview2.escape_for_html(parsed_line.group('message')), webpreview2.escape_for_html(parsed_line.group('code')), webpreview2.escape_for_html(parsed_line.group('column_indicator'))))
-            sys.stdout.flush()
+            jsinterface.call('addToList',
+                             parsed_line.group('warning_level'),
+                             parsed_line.group('filename'),
+                             parsed_line.group('line_number'),
+                             parsed_line.group('message'),
+                             parsed_line.group('code'),
+                             parsed_line.group('column_indicator'))
             # Clear the buffer so that we don't find this one again.
             buffer = ''
 
@@ -143,7 +147,7 @@ def build():
              </span></div>
              <div class="inner" id="raw_out_b" style="display: none;"><br/>
              <code>%s</code><br/>""" % raw_output    
-    print webpreview2.html_footer()
+    print htmloutput.footer()
 
 
 if __name__ == '__main__':
