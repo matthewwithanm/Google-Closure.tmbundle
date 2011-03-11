@@ -3,20 +3,20 @@
 <plist version="1.0">
 <dict>
 	<key>beforeRunningCommand</key>
-	<string>saveActiveFile</string>
+	<string>nop</string>
 	<key>command</key>
 	<string>style_checker.py</string>
 	<key>input</key>
 	<string>document</string>
 	<key>keyEquivalent</key>
-	<string>^~Z</string>
+	<string>^~A</string>
 	<key>name</key>
-	<string>fixjsstyle</string>
+	<string>JS Style Checker</string>
 	<key>output</key>
 	<string>showAsTooltip</string>
 	<key>scope</key>
 	<string>source.js</string>
 	<key>uuid</key>
-	<string>4F7786F6-2C23-4F69-8F8E-D3BC30AF66FB</string>
+	<string>E78E0DF2-2960-4BC6-B34B-DDD3B8DCA25F</string>
 </dict>
 </plist>
