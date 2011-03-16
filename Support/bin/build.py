@@ -68,7 +68,7 @@ def build():
     	e_sh(CLOSURE_BUILDER),
     	'--root', e_sh(CLOSURE_LIBRARY_PATH),
     	'--root', e_sh(TM_PROJECT_DIRECTORY),
-    	'--output_mode=compiled',
+    	'--output_mode ', GC_OUTPUT_MODE,
     	'--compiler_jar', e_sh(CLOSURE_COMPILER),
     	'--output_file', e_sh(outfile)]
     if DEBUG:

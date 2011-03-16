@@ -14,6 +14,7 @@ CLOSURE_LIBRARY_PATH = os.path.join(LIB_PATH, 'third_party/closure-library')
 CLOSURE_LIBRARY_BIN_PATH = os.path.join(CLOSURE_LIBRARY_PATH, 'closure/bin')
 
 # Closure compiler
+GC_OUTPUT_MODE = os.environ.get('GC_OUTPUT_MODE', 'compiled')
 GC_OUTPUT_FILE = os.environ.get('GC_OUTPUT_FILE')
 GC_INPUT = os.environ.get('GC_INPUT')
 if GC_OUTPUT_FILE:
