@@ -17,6 +17,7 @@ CLOSURE_LIBRARY_BIN_PATH = os.path.join(CLOSURE_LIBRARY_PATH, 'closure/bin')
 GC_OUTPUT_MODE = os.environ.get('GC_OUTPUT_MODE', 'compiled')
 GC_OUTPUT_FILE = os.environ.get('GC_OUTPUT_FILE')
 GC_INPUT = os.environ.get('GC_INPUT')
+GC_WARNING_LEVEL = os.environ.get('GC_WARNING_LEVEL', 'VERBOSE')
 if GC_OUTPUT_FILE:
     GC_OUTPUT_FILE = os.path.join(TM_PROJECT_DIRECTORY, GC_OUTPUT_FILE)
 if GC_INPUT:

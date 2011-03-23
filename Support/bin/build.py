@@ -52,7 +52,7 @@ def build():
     source_map = os.path.splitext(outfile)[0] + '-sourcemap'
 
     if not TM_PROJECT_DIRECTORY:
-    	textmate.exit_show_tool_tip('You need a project!')
+        textmate.exit_show_tool_tip('You need a project!')
     
     if DEBUG:
         title = 'DEBUG Build (closurebuilder.py)'
@@ -65,16 +65,17 @@ def build():
     e_sh = textmate.sh_escape
     args = [
         'python',
-    	e_sh(CLOSURE_BUILDER),
-    	'--root', e_sh(CLOSURE_LIBRARY_PATH),
-    	'--root', e_sh(TM_PROJECT_DIRECTORY),
-    	'--output_mode ', GC_OUTPUT_MODE,
-    	'--compiler_jar', e_sh(CLOSURE_COMPILER),
-    	'--output_file', e_sh(outfile)]
+        e_sh(CLOSURE_BUILDER),
+        '--root', e_sh(CLOSURE_LIBRARY_PATH),
+        '--root', e_sh(TM_PROJECT_DIRECTORY),
+        '--output_mode ', GC_OUTPUT_MODE,
+        '--compiler_jar', e_sh(CLOSURE_COMPILER),
+        '--output_file', e_sh(outfile),
+        '--compiler_flags="--warning_level=%s"' % GC_WARNING_LEVEL,]
     if DEBUG:
         args += [
             '--compiler_flags="--debug"',
-    	    '--compiler_flags="--create_source_map=%s"' % e_sh(source_map).replace('"', '\\"')]
+            '--compiler_flags="--create_source_map=%s"' % e_sh(source_map).replace('"', '\\"')]
     for file in files_to_compile:
         args += ['--input', e_sh(file)]
     cmd = ' '.join(args)
