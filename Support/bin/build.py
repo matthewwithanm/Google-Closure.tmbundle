@@ -17,8 +17,11 @@ from settings import *
 from pytm import textmate, jsinterface, htmloutput
 
 
+exception_pattern = re.compile('^(?P<filename>[^\:\n]+?):(?P<line_number>\d+):\s+(?P<warning_level>[A-Z]+)\s+-\s+(?P<message>[\n\w\W]*?)(\n(?P<code>.*)(\n(?P<column_indicator>.*))?)?\n\n', re.MULTILINE)
+
+
 def parse_line(txt):
-    return  re.search('^(?P<filename>[^\:]+?):(?P<line_number>\d+):\s+(?P<warning_level>[A-Z]+)\s+-\s+(?P<message>.*)(\n(?P<code>.*)(\n(?P<column_indicator>.*))?)?\n\n', txt, re.MULTILINE)
+    return exception_pattern.search(txt)
 
 
 def eval_str(str):
@@ -112,7 +115,7 @@ def build():
                 }
                 
                 var li = document.createElement("li");
-                var innerHTML = "<b>" + ln + ": </b>" + msg;
+                var innerHTML = "<b>" + ln + ": </b>" + msg.replace(/\\n/g, "<br />");
                 if (code)
                     innerHTML += "<br /><pre><code>" + code + "\\n" + columnIndicator + "</code></pre>";
                 li.innerHTML = innerHTML;
