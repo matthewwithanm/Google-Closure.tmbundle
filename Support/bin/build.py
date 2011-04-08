@@ -74,6 +74,7 @@ def build():
         '--output_mode ', GC_OUTPUT_MODE,
         '--compiler_jar', e_sh(CLOSURE_COMPILER),
         '--output_file', e_sh(outfile),
+        '--compiler_flags="--compilation_level=%s"' % GC_COMPILATION_LEVEL,
         '--compiler_flags="--warning_level=%s"' % GC_WARNING_LEVEL,]
     if DEBUG:
         args += [
